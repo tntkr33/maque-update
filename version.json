@@ -1,0 +1,22 @@
+{
+  "latest_version": "0.4.1",
+  "published_at": "2026-09-10",
+  "release_notes": [
+    "暂时隐藏未成熟的经营体检和实验视图，保留原有成熟功能。",
+    "客户相关看板补充客户档位，并支持最大化查看。",
+    "修复桌面版单期、现期、对标期和跨期台账拖拽导入无响应。",
+    "启用由用户主动触发的检查更新；不会自动检查、下载或安装。"
+  ],
+  "download_page": "https://github.com/tntkr33/maque-update/releases/tag/v0.4.1",
+  "packages": {
+    "windows-x64": {
+      "sha256": "6bf472e9cb9c951c86d2940d9b822993d060915a302cec18c3350b8978c0b67a"
+    },
+    "macos-arm64": {
+      "sha256": "1a6b2979ff3d3e4002be5dba9e7cec8f466f0a4f42f061eecaa9934b0322e6d6"
+    },
+    "uos20-arm64": {
+      "sha256": "66420171972ae8051d03d1d114d614598c80425143a1be7b40cee1567f9a565a"
+    }
+  }
+}
