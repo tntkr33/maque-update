@@ -1,0 +1,44 @@
+name: 发布三端安装包
+
+on:
+  workflow_dispatch:
+    inputs:
+      windows_url:
+        description: Windows 安装包临时下载地址
+        required: true
+        type: string
+      uos_url:
+        description: 统信 UOS 安装包临时下载地址
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 下载正式安装包
+        env:
+          WINDOWS_URL: ${{ inputs.windows_url }}
+          UOS_URL: ${{ inputs.uos_url }}
+        run: |
+          curl --fail --location --retry 5 --retry-all-errors \
+            --output maque-0.4.1-windows-x64.zip "$WINDOWS_URL"
+          curl --fail --location --retry 5 --retry-all-errors \
+            --output maque-0.4.1-uos20-arm64-compatible.zip "$UOS_URL"
+
+      - name: 校验安装包
+        run: |
+          echo "6bf472e9cb9c951c86d2940d9b822993d060915a302cec18c3350b8978c0b67a  maque-0.4.1-windows-x64.zip" | sha256sum --check
+          echo "66420171972ae8051d03d1d114d614598c80425143a1be7b40cee1567f9a565a  maque-0.4.1-uos20-arm64-compatible.zip" | sha256sum --check
+
+      - name: 上传到公开发布页
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload v0.4.1 \
+            maque-0.4.1-windows-x64.zip \
+            maque-0.4.1-uos20-arm64-compatible.zip \
+            --repo "$GITHUB_REPOSITORY" --clobber
